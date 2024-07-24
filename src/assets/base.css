@@ -1,0 +1,89 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --dc-g-white: #ffffff;
+  --dc-g-white-soft: #f8f8f8;
+  --dc-g-white-mute: #f2f2f2;
+
+  --dc-g-black: #1a1a1a;
+  --dc-g-black-soft: #222222;
+  --dc-g-black-mute: #282828;
+  
+  --dc-g-green: #59c393;
+
+  --dc-g-indigo: #2c3e50;
+
+  --dc-g-divider-light-1: rgba(60, 60, 60, 0.29);
+  --dc-g-divider-light-2: rgba(60, 60, 60, 0.12);
+  --dc-g-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --dc-g-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+  --dc-g-text-light-1: var(--dc-g-indigo);
+  --dc-g-text-light-2: rgba(60, 60, 60, 0.66);
+  --dc-g-text-dark-1: var(--dc-g-white);
+  --dc-g-text-dark-2: rgba(235, 235, 235, 0.64);
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--dc-g-white);
+  --color-background-soft: var(--dc-g-white-soft);
+  --color-background-mute: var(--dc-g-white-mute);
+
+  --color-border: var(--dc-g-divider-light-2);
+  --color-border-hover: var(--dc-g-divider-light-1);
+
+  --color-heading: var(--dc-g-text-light-1);
+  --color-text: var(--dc-g-text-light-1);
+  --color-text-green: var(--dc-g-green);
+
+  --section-gap: 160px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--dc-g-black);
+    --color-background-soft: var(--dc-g-black-soft);
+    --color-background-mute: var(--dc-g-black-mute);
+
+    --color-border: var(--dc-g-divider-dark-2);
+    --color-border-hover: var(--dc-g-divider-dark-1);
+
+    --color-heading: var(--dc-g-text-dark-1);
+    --color-text: var(--dc-g-text-dark-2);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
