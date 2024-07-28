@@ -7,13 +7,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules
 node_modules
-.DS_Store
+
+# Environment files
+.env
+
+# Dist directories
 dist
 dist-ssr
-coverage
-*.local
 
+# Coverage directory
+coverage
+
+# Cypress directories
 /cypress/videos/
 /cypress/screenshots/
 
@@ -27,4 +34,8 @@ coverage
 *.sln
 *.sw?
 
+# TypeScript build info files
 *.tsbuildinfo
+
+# OS-specific files
+.DS_Store
