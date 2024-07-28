@@ -7,8 +7,16 @@
   --dc-g-black: #1a1a1a;
   --dc-g-black-soft: #222222;
   --dc-g-black-mute: #282828;
-  
-  --dc-g-green: #59c393;
+
+  /* --dc-g-green: #42b883;
+  --dc-g-green-soft: #65cf9f;
+  --dc-g-green-mute: #71dbab; */
+
+  --dc-g-green: #42b883;
+  --dc-g-green-light: #42d392;
+  --dc-g-green-lighter: #35eb9a;
+  --dc-g-green-dark: #33a06f;
+  --dc-g-green-darker: #155f3e;
 
   --dc-g-indigo: #2c3e50;
 
@@ -35,8 +43,10 @@
   --color-heading: var(--dc-g-text-light-1);
   --color-text: var(--dc-g-text-light-1);
   --color-text-green: var(--dc-g-green);
+  --color-text-green-soft: var(--dc-g-green-lighter);
+  --color-text-green-mute: var(--dc-g-green-darker);
 
-  --section-gap: 160px;
+  --section-gap: 1.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,6 +60,7 @@
 
     --color-heading: var(--dc-g-text-dark-1);
     --color-text: var(--dc-g-text-dark-2);
+    
   }
 }
 
