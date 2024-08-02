@@ -15,7 +15,7 @@
           <RouterLink to="/">Home</RouterLink>
         </li>
         <li>
-          <RouterLink to="/tempo-ovos">Tempo ovos</RouterLink>
+          <RouterLink to="/tempo-incubadora">Tempo incubadora</RouterLink>
         </li>
         <li>
           <RouterLink to="/guia-iniciante-dragon-city">Guia iniciante</RouterLink>
