@@ -13,6 +13,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@vueuse/core": "^11.0.0",
     "@vueuse/head": "2.0.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"

@@ -20,6 +20,7 @@
         <li>
           <RouterLink to="/guia-iniciante-dragon-city">Guia iniciante</RouterLink>
         </li>
+        <DarkModeComponent @toggle-dark-mode="handleDarkModeToggle" />
       </ul>
     </nav>
   </header>
@@ -27,6 +28,14 @@
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
+import DarkModeComponent from './DarkModeComponent.vue'
+
+const darkModeStatus = ref(false)
+
+const handleDarkModeToggle = (value: boolean) => {
+  darkModeStatus.value = value
+}
 </script>
 
 <style scoped>

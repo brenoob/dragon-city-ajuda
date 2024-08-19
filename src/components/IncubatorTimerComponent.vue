@@ -6,13 +6,18 @@
         <h2>Tempo incubadora</h2>
         <h3>existem {{ dataResults.length }} dragões no jogo</h3>
         <p>Escolha um dragão para ver o tempo de incubação:</p>
-        <input type="text" placeholder="Pesquisar por dragão" v-model="searchDragon" alt="Pesquisar por dragão">
+        <input
+          type="text"
+          placeholder="Pesquisar por dragão"
+          v-model="searchDragon"
+          alt="Pesquisar por dragão"
+        />
         <ol class="dragon-incubator" v-for="dragon in filteredDataResults" :key="dragon.id">
           <div class="imgs-dragon">
-            <img :src="dragon.imageUrls[0]" :alt="`imagem${dragon.name}adulto `" width="100">
-            <img :src="dragon.imageUrls[2]" :alt="`imagem ${dragon.name} ovo `" width="100">
+            <img :src="dragon.imageUrls[0]" :alt="`imagem${dragon.name}adulto `" width="100" />
+            <img :src="dragon.imageUrls[2]" :alt="`imagem ${dragon.name} ovo `" width="100" />
           </div>
-          <li>{{ dragon.name.name}}</li>
+          <li>{{ dragon.name.name }}</li>
           <li>Tempo de incubação: {{ dragon.hatchingTimes }}</li>
         </ol>
       </article>
@@ -21,32 +26,32 @@
 </template>
 
 <script setup lang="ts">
-import { useTimerEggsStore } from '@/stores/timerEggs';
-import { useHead } from '@vueuse/head';
-import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { useTimerEggsStore } from '@/stores/timerEggs'
+import { useHead } from '@vueuse/head'
+import { storeToRefs } from 'pinia'
+import { computed, ref } from 'vue'
 
 // Acessa o store e desestrutura os dados
-const { dataResults, title } = storeToRefs(useTimerEggsStore());
+const { dataResults, title } = storeToRefs(useTimerEggsStore())
 
 // Variável para o campo de pesquisa
-const searchDragon = ref<string>('');
+const searchDragon = ref<string>('')
 
 // Computed property para filtrar os dragões com base na pesquisa
 const filteredDataResults = computed(() => {
-  const query = searchDragon.value.toLowerCase();
-  return dataResults.value.map(dragon => {
-    const { id, name, hatchingTimes, imageUrls } = dragon;
-    return {
-      id,
-      name,
-      hatchingTimes,
-      imageUrls
-    };
-  }).filter(dragon =>
-    dragon.name.name.toLowerCase().includes(query)
-  );
-});
+  const query = searchDragon.value.toLowerCase()
+  return dataResults.value
+    .map((dragon) => {
+      const { id, name, hatchingTimes, imageUrls } = dragon
+      return {
+        id,
+        name,
+        hatchingTimes,
+        imageUrls
+      }
+    })
+    .filter((dragon) => dragon.name.name.toLowerCase().includes(query))
+})
 
 // SEO optimization
 useHead({
@@ -81,13 +86,12 @@ ol {
   margin-left: 20px;
 }
 
-.imgs-dragon img{
+.imgs-dragon img {
   border: #333 solid 1px;
   border-radius: 10px;
   padding: 0.5rem;
   margin: 0.3125rem;
   width: 170px;
-  
 }
 
 ol li {
@@ -117,10 +121,10 @@ section {
   place-items: center;
   align-items: center;
   background: var(--color-background-soft);
+  color: var(--color-text);
   border: #333 solid 1px;
   border-radius: 10px;
   padding: 20px;
   margin: 20px;
 }
-
 </style>
