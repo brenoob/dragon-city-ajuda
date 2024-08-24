@@ -1,57 +1,125 @@
 <template>
-  <article>
-    <header>
-      <h1>Bem-vindo ao Dragon City!</h1>
-      <p>Explore o mundo mágico de Dragon City, onde você pode colecionar e batalhar com dragões incríveis!</p>
-    </header>
+  <main>
+    <article>
+      <header>
+        <h1>Bem-vindo ao Dragon City Ajuda!</h1>
+      </header>
+      <section>
+        <p>
+          Explore o mundo mágico de Dragon City, onde você pode colecionar e batalhar com dragões
+          incríveis!
+        </p>
 
-    <section>
-      <h2>Introdução ao Jogo</h2>
-      <p>Dragon City é um emocionante jogo de simulação onde você cria, treina e combate dragões em uma ilha encantada. Com uma vasta coleção de dragões únicos, você pode colecionar, evoluir e batalhar com essas criaturas fantásticas em batalhas emocionantes. Mergulhe em um mundo mágico onde suas habilidades de estratégia e gerenciamento serão testadas enquanto você constrói a cidade dos dragões dos seus sonhos.</p>
-    </section>
+        <h2>Introdução ao Jogo</h2>
 
-    <section>
-      <h2>Destaques e Recursos</h2>
+        <p>
+          Dragon City é um emocionante jogo de simulação onde você cria, treina e combate dragões em
+          uma ilha encantada. Com uma vasta coleção de dragões únicos, você pode colecionar, evoluir
+          e batalhar com essas criaturas fantásticas em batalhas emocionantes. Mergulhe em um mundo
+          mágico onde suas habilidades de estratégia e gerenciamento serão testadas enquanto você
+          constrói a cidade dos dragões dos seus sonhos.
+        </p>
+      </section>
 
-      <h3>Principais Funcionalidades</h3>
-      <ul>
-        <li><strong>Dragões Diversos:</strong> Colecione e evolua uma variedade de dragões, cada um com habilidades e características únicas.</li>
-        <li><strong>Modos de Jogo:</strong> Participe de batalhas emocionantes, conquiste novas ilhas e descubra eventos especiais.</li>
-        <li><strong>Construção e Personalização:</strong> Construa e personalize sua cidade dos dragões com edifícios e decorações exclusivas.</li>
-        <li><strong>Eventos e Desafios:</strong> Participe de eventos sazonais e desafios para ganhar recompensas especiais.</li>
-      </ul>
-      
-      <h3>Dragões Populares</h3>
-      <p>Conheça alguns dos dragões mais impressionantes do Dragon City:</p>
-      <div class="featured-dragons">
-        <figure v-for="dragon in popularDragons" :key="dragon.id" class="dragon-card">
-          <img :src="dragon.imageUrl" :alt="dragon.name" width="150" />
-          <figcaption>
-            <h4>{{ dragon.name }}</h4>
-            <p>{{ dragon.description }}</p>
-          </figcaption>
-        </figure>
-      </div>
-    </section>
-  </article>
+      <section>
+        <h2>Destaques e Recursos</h2>
+
+        <h3>Principais Funcionalidades</h3>
+        <ul>
+          <li v-for="(feature, index) in features" :key="index">
+            <strong>{{ feature.title }}:</strong> {{ feature.description }}
+          </li>
+        </ul>
+
+        <h3>Dragões Populares</h3>
+        <p>Conheça alguns dos dragões mais faceis de se procriar do Dragon City:</p>
+        <div class="featured-dragons">
+          <figure v-for="dragon in filteredDataResults" :key="dragon.id">
+            <figcaption v-if="isPopularDragon(dragon.name.name)">
+              <img
+                :src="dragon.imageUrls[0]"
+                :alt="`Imagem do ${dragon.name.name} adulto`"
+                width="100"
+              />
+              <h4>{{ dragon.name.name }}</h4>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </article>
+  </main>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue'
+import { useTimerEggsStore } from '@/stores/timerEggs'
+import { storeToRefs } from 'pinia'
+import { useHead } from '@vueuse/head'
 
-// Dados fictícios para a página inicial
-const popularDragons = ref([
-  { id: 1, name: 'Dragão Fogo', imageUrl: '@/assets/dragon-fire.jpg', description: 'Um dragão poderoso que controla o fogo, conhecido por sua força em batalhas.' },
-  { id: 2, name: 'Dragão Gelo', imageUrl: '@/assets/dragon-ice.jpg', description: 'Um dragão gelado com habilidades de congelamento, perfeito para climas frios.' },
-  { id: 3, name: 'Dragão Terra', imageUrl: '@/assets/dragon-earth.jpg', description: 'Um dragão robusto que domina o elemento terra, ideal para defesa.' },
-  // Mais dragões...
-]);
+const { dataResults, title } = storeToRefs(useTimerEggsStore())
+
+const filteredDataResults = computed(() => {
+  return dataResults.value.map(({ id, name, hatchingTimes, imageUrls }) => {
+    return {
+      id,
+      name,
+      hatchingTimes,
+      imageUrls
+    }
+  })
+})
+
+const popularDragons = ['Dragão da Fertilidade', 'Dragão Terraformador', 'Dragão Explosão Cósmica']
+
+const isPopularDragon = (dragonName: string) => {
+  return popularDragons.includes(dragonName)
+}
+
+// SEO optimization
+useHead({
+  title: () => title.value,
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Explore o mundo mágico de Dragon City, onde você pode colecionar e batalhar com dragões incríveis!'
+    },
+    { name: 'keywords', content: 'Dragon City, dragões, jogo de simulação' }
+  ]
+})
+
+const features = [
+  {
+    title: 'Dragões Diversos',
+    description:
+      'Colecione e evolua uma variedade de dragões, cada um com habilidades e características únicas.'
+  },
+  {
+    title: 'Modos de Jogo',
+    description:
+      'Participe de batalhas emocionantes, conquiste novas ilhas e descubra eventos especiais.'
+  },
+  {
+    title: 'Construção e Personalização',
+    description:
+      'Construa e personalize sua cidade dos dragões com edifícios e decorações exclusivas.'
+  },
+  {
+    title: 'Eventos e Desafios',
+    description: 'Participe de eventos sazonais e desafios para ganhar recompensas especiais.'
+  }
+]
 </script>
 
 <style scoped>
+section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+}
+
 article {
   max-width: 1000px;
-  margin: 0 auto;
   padding: 20px;
 }
 
@@ -61,7 +129,8 @@ header {
 }
 
 h1 {
-  font-size: 2.5rem;
+  text-align: center;
+  font-size: 2rem;
   color: var(--color-text-green-soft);
 }
 
@@ -69,14 +138,12 @@ h2 {
   color: var(--color-text-green);
   font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 40px;
 }
 
 h3 {
   color: var(--color-text-green-dark);
   font-size: 1.2rem;
   font-weight: bold;
-  margin-top: 20px;
 }
 
 ul {
@@ -86,15 +153,8 @@ ul {
 
 .featured-dragons {
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
   flex-wrap: wrap;
-}
-
-.dragon-card {
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
 }
 
 img {
@@ -103,6 +163,16 @@ img {
 }
 
 figcaption {
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  align-items: center;
+  background: var(--color-background-soft);
+  color: var(--color-text);
+  border: #333 solid 1px;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 2px;
+  text-align: center;
 }
 </style>
