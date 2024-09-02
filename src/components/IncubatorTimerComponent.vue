@@ -1,10 +1,10 @@
 <template>
   <article>
-    <h1>{{ title }}</h1>
+    <h1>{{ timerEggsStore.title }}</h1>
     <section>
       <article>
         <h2>Tempo incubadora</h2>
-        <h3>existem {{ dataResults.length }} dragões no jogo</h3>
+        <h3>Existem {{ timerEggsStore.dataResults.length }} dragões no jogo</h3>
         <p>Escolha um dragão para ver o tempo de incubação:</p>
         <input
           type="text"
@@ -12,50 +12,67 @@
           v-model="searchDragon"
           alt="Pesquisar por dragão"
         />
-        <ol class="dragon-incubator" v-for="dragon in filteredDataResults" :key="dragon.id">
+        
+        <div v-if="timerEggsStore.loading">Carregando...</div>
+        <div v-else-if="timerEggsStore.error">{{ timerEggsStore.error }}</div>
+        <ol class="dragon-incubator" v-for="dragon in paginatedDataResults" :key="dragon.id">
           <div class="imgs-dragon">
-            <img :src="dragon.imageUrls[0]" :alt="`imagem${dragon.name}adulto `" width="100" />
-            <img :src="dragon.imageUrls[2]" :alt="`imagem ${dragon.name} ovo `" width="100" />
+            <img :src="dragon.imageUrls[0]" :alt="`Imagem ${dragon.name} adulto`" width="100" />
+            <img :src="dragon.imageUrls[2]" :alt="`Imagem ${dragon.name} ovo`" width="100" />
           </div>
-          <li>{{ dragon.name.name }}</li>
+          <li>{{ dragon.name }}</li>
           <li>Tempo de incubação: {{ dragon.hatchingTimes }}</li>
         </ol>
+
+        <!-- Navegação de páginas -->
+        <nav class="pagination">
+          <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
+          <span>Página {{ currentPage }} de {{ totalPages }}</span>
+          <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">Próxima</button>
+        </nav>
       </article>
     </section>
   </article>
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
 import { useTimerEggsStore } from '@/stores/timerEggs'
-import { useHead } from '@vueuse/head'
-import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
 
-// Acessa o store e desestrutura os dados
-const { dataResults, title } = storeToRefs(useTimerEggsStore())
+// Utilizando a store do Pinia
+const timerEggsStore = useTimerEggsStore()
 
-// Variável para o campo de pesquisa
 const searchDragon = ref<string>('')
 
-// Computed property para filtrar os dragões com base na pesquisa
-const filteredDataResults = computed(() => {
+// Computed property para filtrar e paginar os dragões com base na pesquisa e página atual
+const currentPage = ref(1)
+const itemsPerPage = 20
+
+const paginatedDataResults = computed(() => {
   const query = searchDragon.value.toLowerCase()
-  return dataResults.value
-    .map((dragon) => {
-      const { id, name, hatchingTimes, imageUrls } = dragon
-      return {
-        id,
-        name,
-        hatchingTimes,
-        imageUrls
-      }
-    })
-    .filter((dragon) => dragon.name.name.toLowerCase().includes(query))
+  const filteredResults = timerEggsStore.dataResults.filter(dragon =>
+    dragon.name.toLowerCase().includes(query)
+  )
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return filteredResults.slice(start, end)
 })
 
-// SEO optimization
-useHead({
-  title: () => title.value
+const totalPages = computed(() => {
+  return Math.ceil(timerEggsStore.dataResults.filter(dragon =>
+    dragon.name.toLowerCase().includes(searchDragon.value.toLowerCase())
+  ).length / itemsPerPage)
+})
+
+const changePage = (page: number) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
+
+// Buscar os dragões ao montar o componente
+onMounted(() => {
+  timerEggsStore.fetchDragons()
 })
 </script>
 
@@ -126,5 +143,31 @@ section {
   border-radius: 10px;
   padding: 20px;
   margin: 20px;
+}
+
+/* Estilização da paginação */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: var(--color-background-soft);
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination span {
+  font-weight: bold;
 }
 </style>
