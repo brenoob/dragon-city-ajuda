@@ -33,15 +33,20 @@
 
         <h3>Dragões Populares</h3>
         <p>Conheça alguns dos dragões mais faceis de se procriar do Dragon City:</p>
-        <div class="featured-dragons">
+
+        <!-- Exibição de mensagens de carregamento ou erro -->
+        <p v-if="loading">Carregando dragões...</p>
+        <p v-if="error">{{ error }}</p>
+
+        <div v-if="!loading && !error" class="featured-dragons">
           <figure v-for="dragon in filteredDataResults" :key="dragon.id">
-            <figcaption v-if="isPopularDragon(dragon.name.name)">
+            <figcaption v-if="isPopularDragon(dragon.name)">
               <img
                 :src="dragon.imageUrls[0]"
-                :alt="`Imagem do ${dragon.name.name} adulto`"
+                :alt="`Imagem do ${dragon.name} adulto`"
                 width="100"
               />
-              <h4>{{ dragon.name.name }}</h4>
+              <h4>{{ dragon.name }}</h4>
             </figcaption>
           </figure>
         </div>
@@ -51,22 +56,29 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useTimerEggsStore } from '@/stores/timerEggs'
 import { storeToRefs } from 'pinia'
 import { useHead } from '@vueuse/head'
 
-const { dataResults, title } = storeToRefs(useTimerEggsStore())
+const timerEggsStore = useTimerEggsStore()
+const { dataResults, title, loading, error } = storeToRefs(timerEggsStore)
+
+onMounted(() => {
+  if (dataResults.value.length === 0) {
+    timerEggsStore.fetchDragons()
+    
+  }
+  // timerEggsStore.fetchDragons()
+})
 
 const filteredDataResults = computed(() => {
-  return dataResults.value.map(({ id, name, hatchingTimes, imageUrls }) => {
-    return {
-      id,
-      name,
-      hatchingTimes,
-      imageUrls
-    }
-  })
+  return dataResults.value.map(({ id, name, hatchingTimes, imageUrls }) => ({
+    id,
+    name,
+    hatchingTimes,
+    imageUrls,
+  }))
 })
 
 const popularDragons = ['Dragão da Fertilidade', 'Dragão Terraformador', 'Dragão Explosão Cósmica']
