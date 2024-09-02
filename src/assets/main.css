@@ -15,4 +15,18 @@ main {
         display: flex;
         place-items: center;
     }
+    
+    .featured-dragons {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+    }
+    
+    figcaption {
+        margin-bottom: 30px;
+        justify-content: center;
+        width: 70vw;
+        height: 300px;
+        gap: 20px;
+    }
 }
