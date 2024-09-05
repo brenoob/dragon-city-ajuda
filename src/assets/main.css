@@ -1,32 +1,31 @@
 @import './base.css';
 
-
 body.dark {
-    background: var(--color-background-mute);
-    color: var(--color-text);
+  background: var(--color-background-mute);
+  color: var(--color-text);
 }
 
 main {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 @media screen and (max-width: 700px) {
-    .imgs-dragon img {
-        display: flex;
-        place-items: center;
-    }
-    
-    .featured-dragons {
-        display: flex;
-        flex-direction: column;
-        place-items: center;
-    }
-    
-    figcaption {
-        margin-bottom: 30px;
-        justify-content: center;
-        width: 70vw;
-        height: 300px;
-        gap: 20px;
-    }
+  .imgs-dragon img {
+    display: flex;
+    place-items: center;
+  }
+
+  .featured-dragons {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+  }
+
+  figcaption {
+    margin-bottom: 30px;
+    justify-content: center;
+    width: 70vw;
+    height: 300px;
+    gap: 20px;
+  }
 }

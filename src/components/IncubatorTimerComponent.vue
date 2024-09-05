@@ -1,36 +1,36 @@
 <template>
+  <h1>{{ title }}</h1>
   <article>
-    <h1>{{ timerEggsStore.title }}</h1>
     <section>
-      <article>
-        <h2>Tempo incubadora</h2>
-        <h3>Existem {{ timerEggsStore.dataResults.length }} dragões no jogo</h3>
-        <p>Escolha um dragão para ver o tempo de incubação:</p>
-        <input
-          type="text"
-          placeholder="Pesquisar por dragão"
-          v-model="searchDragon"
-          alt="Pesquisar por dragão"
-        />
-        
-        <div v-if="timerEggsStore.loading">Carregando...</div>
-        <div v-else-if="timerEggsStore.error">{{ timerEggsStore.error }}</div>
-        <ol class="dragon-incubator" v-for="dragon in paginatedDataResults" :key="dragon.id">
-          <div class="imgs-dragon">
-            <img :src="dragon.imageUrls[0]" :alt="`Imagem ${dragon.name} adulto`" width="100" />
-            <img :src="dragon.imageUrls[2]" :alt="`Imagem ${dragon.name} ovo`" width="100" />
-          </div>
-          <li>{{ dragon.name }}</li>
-          <li>Tempo de incubação: {{ dragon.hatchingTimes }}</li>
-        </ol>
+      <h2>Tempo de incubadora</h2>
+      <h3>Existem {{ timerEggsStore.dataResults.length }} dragões no jogo</h3>
+      <p>Escolha um dragão para ver o tempo de incubação:</p>
+      <input
+        type="text"
+        placeholder="Pesquisar por dragão"
+        v-model="searchDragon"
+        alt="Pesquisar por dragão"
+      />
 
-        <!-- Navegação de páginas -->
-        <nav class="pagination">
-          <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
-          <span>Página {{ currentPage }} de {{ totalPages }}</span>
-          <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">Próxima</button>
-        </nav>
-      </article>
+      <div v-if="timerEggsStore.loading">Carregando...</div>
+      <div v-else-if="timerEggsStore.error">{{ timerEggsStore.error }}</div>
+      <ol class="dragon-incubator" v-for="dragon in paginatedDataResults" :key="dragon.id">
+        <div class="imgs-dragon">
+          <img :src="dragon.imageUrls[0]" :alt="`Imagem ${dragon.name} adulto`" width="100" />
+          <img :src="dragon.imageUrls[2]" :alt="`Imagem ${dragon.name} ovo`" width="100" />
+        </div>
+        <li>{{ dragon.name }}</li>
+        <li>Tempo de incubação: {{ dragon.hatchingTimes }}</li>
+      </ol>
+
+      <!-- Navegação de páginas -->
+      <nav class="pagination">
+        <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
+        <span>Página {{ currentPage }} de {{ totalPages }}</span>
+        <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">
+          Próxima
+        </button>
+      </nav>
     </section>
   </article>
 </template>
@@ -38,9 +38,12 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useTimerEggsStore } from '@/stores/timerEggs'
+import { useHead } from '@vueuse/head'
 
 // Utilizando a store do Pinia
 const timerEggsStore = useTimerEggsStore()
+
+const title = ref('Tempo de incubação dos dragões no Dragon City')
 
 const searchDragon = ref<string>('')
 
@@ -50,7 +53,7 @@ const itemsPerPage = 20
 
 const paginatedDataResults = computed(() => {
   const query = searchDragon.value.toLowerCase()
-  const filteredResults = timerEggsStore.dataResults.filter(dragon =>
+  const filteredResults = timerEggsStore.dataResults.filter((dragon) =>
     dragon.name.toLowerCase().includes(query)
   )
   const start = (currentPage.value - 1) * itemsPerPage
@@ -59,9 +62,11 @@ const paginatedDataResults = computed(() => {
 })
 
 const totalPages = computed(() => {
-  return Math.ceil(timerEggsStore.dataResults.filter(dragon =>
-    dragon.name.toLowerCase().includes(searchDragon.value.toLowerCase())
-  ).length / itemsPerPage)
+  return Math.ceil(
+    timerEggsStore.dataResults.filter((dragon) =>
+      dragon.name.toLowerCase().includes(searchDragon.value.toLowerCase())
+    ).length / itemsPerPage
+  )
 })
 
 const changePage = (page: number) => {
@@ -74,6 +79,21 @@ const changePage = (page: number) => {
 onMounted(() => {
   timerEggsStore.fetchDragons()
 })
+
+useHead({
+  title: () => title.value,
+  meta: [
+    {
+      name: 'description',
+      content: 'Tempo de incubação dos dragões no Dragon City'
+    },
+    {
+      name: 'keywords',
+      content:
+        'Dragon City, incubação de dragões, guia de dragões, tempo de incubação, tempo ovos Dragon City'
+    }
+  ]
+})
 </script>
 
 <style scoped>
@@ -85,7 +105,7 @@ article {
 
 h1 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-top: 40px;
   color: var(--color-text-green-soft);
 }
@@ -95,6 +115,12 @@ h2 {
   font-size: 1.2rem;
   font-weight: bold;
   margin-top: 60px;
+}
+
+h3 {
+  color: var(--color-text-green-dark);
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 ul,

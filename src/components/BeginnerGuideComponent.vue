@@ -1,6 +1,6 @@
 <template>
+  <h1>{{ title }}</h1>
   <article>
-    <h1>{{ title }}</h1>
     <section>
       <h2>Raridades dos Dragões</h2>
       <p>Os dragões no jogo têm {{ rarities.length }} raridades distintas:</p>
@@ -40,14 +40,16 @@
 import { useDragonStore } from '@/stores/dragon'
 import { useHead } from '@vueuse/head'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 const dragonStore = useDragonStore()
-const { title, rarities, rarityImpacts, functionalities, elementCharacteristics } =
+const { rarities, rarityImpacts, functionalities, elementCharacteristics } =
   storeToRefs(dragonStore)
+const title = ref('Raridades e Características dos Dragões em Jogo')
 
 // SEO optimization
 useHead({
-  title: () => `${title.value} - Our Game`,
+  title: () => title.value,
   meta: [
     {
       name: 'description',

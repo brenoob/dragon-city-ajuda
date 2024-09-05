@@ -60,7 +60,6 @@
 
     --color-heading: var(--dc-g-text-dark-1);
     --color-text: var(--dc-g-text-dark-2);
-    
   }
 }
 
@@ -73,7 +72,7 @@
 }
 
 body {
-  min-height: 100vh;  
+  min-height: 100vh;
   transition:
     color 0.5s,
     background-color 0.5s;

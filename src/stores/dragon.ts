@@ -8,20 +8,18 @@ import Mythic from '../assets/images/mythical.png'
 import Heroic from '../assets/images/heroic.png'
 
 interface DragonState {
-  title: string;
-  rarities: { name: string; imageUrl: string }[];
-  rarityImpacts: string[];
-  functionalities: string[];
-  elementCharacteristics: string[];
+  rarities: { name: string; imageUrl: string }[]
+  rarityImpacts: string[]
+  functionalities: string[]
+  elementCharacteristics: string[]
 }
 
 export const useDragonStore = defineStore('dragon', {
   state: (): DragonState => ({
-    title: 'Raridades e Características dos Dragões em Jogo',
     rarities: [
       { name: 'Comum', imageUrl: Common },
       { name: 'Raro', imageUrl: Rare },
-      { name: 'Muito Raro', imageUrl: VeryRare},
+      { name: 'Muito Raro', imageUrl: VeryRare },
       { name: 'Epico', imageUrl: Epic },
       { name: 'Lendario', imageUrl: Legendary },
       { name: 'Mitico', imageUrl: Mythic },

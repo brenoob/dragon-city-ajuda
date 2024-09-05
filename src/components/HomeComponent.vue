@@ -1,75 +1,66 @@
 <template>
-  <main>
-    <article>
-      <header>
-        <h1>Bem-vindo ao Dragon City Ajuda!</h1>
-      </header>
-      <section>
-        <p>
-          Explore o mundo mágico de Dragon City, onde você pode colecionar e batalhar com dragões
-          incríveis!
-        </p>
+  <h1>{{ title }}</h1>
+  <article>
+    <section>
+      <p>
+        Explore o mundo mágico de Dragon City, onde você pode colecionar e batalhar com dragões
+        incríveis!
+      </p>
 
-        <h2>Introdução ao Jogo</h2>
+      <h2>Introdução ao Jogo</h2>
 
-        <p>
-          Dragon City é um emocionante jogo de simulação onde você cria, treina e combate dragões em
-          uma ilha encantada. Com uma vasta coleção de dragões únicos, você pode colecionar, evoluir
-          e batalhar com essas criaturas fantásticas em batalhas emocionantes. Mergulhe em um mundo
-          mágico onde suas habilidades de estratégia e gerenciamento serão testadas enquanto você
-          constrói a cidade dos dragões dos seus sonhos.
-        </p>
-      </section>
+      <p>
+        Dragon City é um emocionante jogo de simulação onde você cria, treina e combate dragões em
+        uma ilha encantada. Com uma vasta coleção de dragões únicos, você pode colecionar, evoluir e
+        batalhar com essas criaturas fantásticas em batalhas emocionantes. Mergulhe em um mundo
+        mágico onde suas habilidades de estratégia e gerenciamento serão testadas enquanto você
+        constrói a cidade dos dragões dos seus sonhos.
+      </p>
+    </section>
 
-      <section>
-        <h2>Destaques e Recursos</h2>
+    <section>
+      <h2>Destaques e Recursos</h2>
 
-        <h3>Principais Funcionalidades</h3>
-        <ul>
-          <li v-for="(feature, index) in features" :key="index">
-            <strong>{{ feature.title }}:</strong> {{ feature.description }}
-          </li>
-        </ul>
+      <h3>Principais Funcionalidades</h3>
+      <ul>
+        <li v-for="(feature, index) in features" :key="index">
+          <strong>{{ feature.title }}:</strong> {{ feature.description }}
+        </li>
+      </ul>
 
-        <h3>Dragões Populares</h3>
-        <p>Conheça alguns dos dragões mais faceis de se procriar do Dragon City:</p>
+      <h3>Dragões Populares</h3>
+      <p>Conheça alguns dos dragões mais faceis de se procriar do Dragon City:</p>
 
-        <!-- Exibição de mensagens de carregamento ou erro -->
-        <p v-if="loading">Carregando dragões...</p>
-        <p v-if="error">{{ error }}</p>
+      <!-- Exibição de mensagens de carregamento ou erro -->
+      <p v-if="loading">Carregando dragões...</p>
+      <p v-if="error">{{ error }}</p>
 
-        <div v-if="!loading && !error" class="featured-dragons">
-          <figure v-for="dragon in filteredDataResults" :key="dragon.id">
-            <figcaption v-if="isPopularDragon(dragon.name)">
-              <img
-                :src="dragon.imageUrls[0]"
-                :alt="`Imagem do ${dragon.name} adulto`"
-                width="100"
-              />
-              <h4>{{ dragon.name }}</h4>
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-    </article>
-  </main>
+      <div v-if="!loading && !error" class="featured-dragons">
+        <figure v-for="dragon in filteredDataResults" :key="dragon.id">
+          <figcaption v-if="isPopularDragon(dragon.name)">
+            <img :src="dragon.imageUrls[0]" :alt="`Imagem do ${dragon.name} adulto`" width="100" />
+            <h4>{{ dragon.name }}</h4>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  </article>
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useTimerEggsStore } from '@/stores/timerEggs'
 import { storeToRefs } from 'pinia'
 import { useHead } from '@vueuse/head'
 
 const timerEggsStore = useTimerEggsStore()
-const { dataResults, title, loading, error } = storeToRefs(timerEggsStore)
+const title = ref('Bem-vindo ao Dragon City Ajuda!')
+const { dataResults, loading, error } = storeToRefs(timerEggsStore)
 
 onMounted(() => {
   if (dataResults.value.length === 0) {
     timerEggsStore.fetchDragons()
-    
   }
-  // timerEggsStore.fetchDragons()
 })
 
 const filteredDataResults = computed(() => {
@@ -77,7 +68,7 @@ const filteredDataResults = computed(() => {
     id,
     name,
     hatchingTimes,
-    imageUrls,
+    imageUrls
   }))
 })
 

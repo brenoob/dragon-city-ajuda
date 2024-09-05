@@ -1,12 +1,11 @@
 <template>
   <NavbarComponent />
-
-  <RouterView />
+  <MainComponent />
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
 import NavbarComponent from './components/NavbarComponent.vue'
+import MainComponent from './components/MainComponent.vue'
 </script>
 
 <style scoped></style>
