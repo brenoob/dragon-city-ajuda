@@ -66,34 +66,6 @@ useHead({
 </script>
 
 <style scoped>
-article {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-h1 {
-  color: var(--color-text-green-soft);
-}
-
-h2 {
-  color: var(--color-text-green);
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 60px;
-}
-
-ul,
-ol {
-  list-style-type: none;
-  margin-left: 20px;
-}
-
-img {
-  border: #333 solid 1px;
-  border-radius: 10px;
-}
-
 ol li {
   border: #333 solid 1px;
   border-radius: 10px;
@@ -105,22 +77,11 @@ ol li {
   max-width: 100px;
 }
 
-li {
-  padding: 0.4rem;
-}
-
-section {
-  display: flex;
-  flex-flow: column;
-  gap: var(--section-gap);
-}
-
 .rarities {
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
-  gap: 20px;
-  place-items: center;
-  align-items: center;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .rarities li {

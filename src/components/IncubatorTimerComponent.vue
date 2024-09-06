@@ -97,36 +97,8 @@ useHead({
 </script>
 
 <style scoped>
-article {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-h1 {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-top: 40px;
-  color: var(--color-text-green-soft);
-}
-
-h2 {
-  color: var(--color-text-green);
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 60px;
-}
-
-h3 {
-  color: var(--color-text-green-dark);
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-ul,
-ol {
-  list-style-type: none;
-  margin-left: 20px;
+input {
+  max-width: 300px;
 }
 
 .imgs-dragon img {
@@ -137,32 +109,12 @@ ol {
   width: 170px;
 }
 
-ol li {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-content: center;
-  place-items: center;
-  align-items: center;
-  gap: 10px;
-}
-
-li {
-  padding: 0.4rem;
-}
-
-section {
-  display: flex;
-  flex-flow: column;
-  gap: var(--section-gap);
-}
-
 .dragon-incubator {
   display: flex;
   flex-flow: column wrap;
   gap: 20px;
+  justify-content: center;
   place-items: center;
-  align-items: center;
   background: var(--color-background-soft);
   color: var(--color-text);
   border: #333 solid 1px;

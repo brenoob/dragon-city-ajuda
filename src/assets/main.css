@@ -5,8 +5,59 @@ body.dark {
   color: var(--color-text);
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+
 main {
   margin-top: 50px;
+}
+
+article {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+section {
+  gap: var(--section-gap);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 40px;
+  color: var(--color-text-green-soft);
+}
+
+h2 {
+  color: var(--color-text-green);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 60px;
+}
+
+h3 {
+  color: var(--color-text-green-dark);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+ul,
+ol {
+  list-style-type: none;
+  margin-left: 20px;
+}
+
+img {
+  border: #333 solid 1px;
+  border-radius: 10px;
+}
+
+li {
+  padding: 0.4rem;
 }
 
 @media screen and (max-width: 700px) {
@@ -21,10 +72,21 @@ main {
     place-items: center;
   }
 
+  section {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+  }
+
+  .dragon-incubator {
+    width: 60vw;
+    height: 600px;
+  }
+
   figcaption {
     margin-bottom: 30px;
     justify-content: center;
-    width: 70vw;
+    width: 60vw;
     height: 300px;
     gap: 20px;
   }

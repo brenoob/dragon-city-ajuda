@@ -115,54 +115,10 @@ const features = [
 </script>
 
 <style scoped>
-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--section-gap);
-}
-
-article {
-  max-width: 1000px;
-  padding: 20px;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-h1 {
-  text-align: center;
-  font-size: 2rem;
-  color: var(--color-text-green-soft);
-}
-
-h2 {
-  color: var(--color-text-green);
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-h3 {
-  color: var(--color-text-green-dark);
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
 .featured-dragons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
-}
-
-img {
-  border: 1px solid #333;
-  border-radius: 10px;
 }
 
 figcaption {
@@ -177,5 +133,6 @@ figcaption {
   padding: 20px;
   margin: 2px;
   text-align: center;
+  min-width: 215px;
 }
 </style>
